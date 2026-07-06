@@ -1,0 +1,142 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\ShivamMourya\\Downloads\\Crud.AssetManagement-CQRS-Module\\AssetManagementCQRS\\Crud.AssetManagement.Queries\\Crud.AssetManagement.Queries.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\ShivamMourya\\Downloads\\Crud.AssetManagement-CQRS-Module\\AssetManagementCQRS\\Crud.AssetManagement.Infrastructure\\Crud.AssetManagement.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ShivamMourya\\Downloads\\Crud.AssetManagement-CQRS-Module\\AssetManagementCQRS\\Crud.AssetManagement.Infrastructure\\Crud.AssetManagement.Infrastructure.csproj",
+        "projectName": "Crud.AssetManagement.Infrastructure",
+        "projectPath": "C:\\Users\\ShivamMourya\\Downloads\\Crud.AssetManagement-CQRS-Module\\AssetManagementCQRS\\Crud.AssetManagement.Infrastructure\\Crud.AssetManagement.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\ShivamMourya\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ShivamMourya\\Downloads\\Crud.AssetManagement-CQRS-Module\\AssetManagementCQRS\\Crud.AssetManagement.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\ShivamMourya\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FluentNHibernate": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.2.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.128/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\ShivamMourya\\Downloads\\Crud.AssetManagement-CQRS-Module\\AssetManagementCQRS\\Crud.AssetManagement.Queries\\Crud.AssetManagement.Queries.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ShivamMourya\\Downloads\\Crud.AssetManagement-CQRS-Module\\AssetManagementCQRS\\Crud.AssetManagement.Queries\\Crud.AssetManagement.Queries.csproj",
+        "projectName": "Crud.AssetManagement.Queries",
+        "projectPath": "C:\\Users\\ShivamMourya\\Downloads\\Crud.AssetManagement-CQRS-Module\\AssetManagementCQRS\\Crud.AssetManagement.Queries\\Crud.AssetManagement.Queries.csproj",
+        "packagesPath": "C:\\Users\\ShivamMourya\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ShivamMourya\\Downloads\\Crud.AssetManagement-CQRS-Module\\AssetManagementCQRS\\Crud.AssetManagement.Queries\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\ShivamMourya\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\ShivamMourya\\Downloads\\Crud.AssetManagement-CQRS-Module\\AssetManagementCQRS\\Crud.AssetManagement.Infrastructure\\Crud.AssetManagement.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\ShivamMourya\\Downloads\\Crud.AssetManagement-CQRS-Module\\AssetManagementCQRS\\Crud.AssetManagement.Infrastructure\\Crud.AssetManagement.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.35, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.4.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.128/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
