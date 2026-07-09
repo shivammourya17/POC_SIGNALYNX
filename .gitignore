@@ -1,0 +1,32 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# User-specific IDE files
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / ReSharper
+.idea/
+_ReSharper*/
+*.DotSettings.user
+
+# Visual Studio cache and test output
+TestResults/
+*.VisualState.xml
+
+# NuGet
+*.nupkg
+packages/
+project.lock.json
+project.assets.json
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.cache

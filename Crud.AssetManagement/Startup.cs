@@ -27,7 +27,7 @@ namespace Crud.AssetManagement
         {
             services.AddApiServices();
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(_ => { }, AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddCommandServices();
             services.AddQueriesServices();

@@ -1,4 +1,5 @@
 using AutoMapper;
+using Crud.AssetManagement.Commands.Asset;
 using Crud.AssetManagement.Infrastructure.Models.Asset;
 
 namespace Crud.AssetManagement.Commands.Mapper
