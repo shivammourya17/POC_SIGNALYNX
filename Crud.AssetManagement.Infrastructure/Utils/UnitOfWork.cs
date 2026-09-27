@@ -1,14 +1,24 @@
 using System.Threading.Tasks;
+using NHibernate;
 using Crud.AssetManagement.Infrastructure.Contracts;
 
 namespace Crud.AssetManagement.Infrastructure.Utils
 {
-    // Lightweight stand-in for the shared Crud UnitOfWork base class.
+    // Commits pending changes on the request's shared ISession inside a transaction.
     public abstract class UnitOfWork : IUnitOfWork
     {
-        public virtual Task FlushAsync()
+        private readonly ISession _session;
+
+        protected UnitOfWork(ISession session)
         {
-            return Task.CompletedTask;
+            _session = session;
+        }
+
+        public virtual async Task FlushAsync()
+        {
+            using var transaction = _session.BeginTransaction();
+            await _session.FlushAsync();
+            await transaction.CommitAsync();
         }
     }
 }

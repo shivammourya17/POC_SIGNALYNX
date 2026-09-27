@@ -1,13 +1,13 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using MediatR;
+using Signalynx;
 using Crud.AssetManagement.Commands.Utils;
 using Crud.AssetManagement.Infrastructure.Contracts.Asset;
 
 namespace Crud.AssetManagement.Commands.Asset
 {
-    public class DeleteAssetCommandHandler : IRequestHandler<DeleteAssetCommand, Result<string>>
+    public class DeleteAssetCommandHandler : ICommandHandler<DeleteAssetCommand, Result<string>>
     {
         private readonly IAssetUnitOfWork _assetUnitOfWork;
 
@@ -16,7 +16,7 @@ namespace Crud.AssetManagement.Commands.Asset
             _assetUnitOfWork = assetUnitOfWork;
         }
 
-        public async Task<Result<string>> Handle(DeleteAssetCommand request, CancellationToken cancellationToken)
+        public async ValueTask<Result<string>> HandleAsync(DeleteAssetCommand request, CancellationToken cancellationToken = default)
         {
             var model = await _assetUnitOfWork.AssetRepository.GetByIdAsync(request.AssetId);
 

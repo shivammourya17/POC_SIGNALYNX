@@ -1,8 +1,8 @@
-using MediatR;
+using Signalynx;
 
 namespace Crud.AssetManagement.Queries.Asset.GetAssetById
 {
-    public class GetAssetByIdQuery : IRequest<GetAssetByIdQueryResult>
+    public class GetAssetByIdQuery : IQuery<GetAssetByIdQueryResult>
     {
         public int AssetId { get; }
 

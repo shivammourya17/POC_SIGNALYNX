@@ -1,9 +1,9 @@
 using CSharpFunctionalExtensions;
-using MediatR;
+using Signalynx;
 
 namespace Crud.AssetManagement.Commands.Asset
 {
-    public class AddAssetCommand : BaseAssetCommand, IRequest<Result<string>>
+    public class AddAssetCommand : BaseAssetCommand, ICommand<Result<string>>
     {
     }
 }

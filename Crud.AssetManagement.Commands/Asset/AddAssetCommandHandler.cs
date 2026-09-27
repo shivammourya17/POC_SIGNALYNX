@@ -1,14 +1,15 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CSharpFunctionalExtensions;
-using MediatR;
+using Signalynx;
 using Crud.AssetManagement.Infrastructure.Contracts.Asset;
 using Crud.AssetManagement.Infrastructure.Models.Asset;
 
 namespace Crud.AssetManagement.Commands.Asset
 {
-    public class AddAssetCommandHandler : IRequestHandler<AddAssetCommand, Result<string>>
+    public class AddAssetCommandHandler : ICommandHandler<AddAssetCommand, Result<string>>
     {
         private readonly IAssetUnitOfWork _assetUnitOfWork;
         private readonly IMapper _mapper;
@@ -19,9 +20,10 @@ namespace Crud.AssetManagement.Commands.Asset
             _mapper = mapper;
         }
 
-        public async Task<Result<string>> Handle(AddAssetCommand request, CancellationToken cancellationToken)
+        public async ValueTask<Result<string>> HandleAsync(AddAssetCommand request, CancellationToken cancellationToken = default)
         {
             var model = _mapper.Map<AssetModel>(request);
+            model.CreatedDate = DateTime.UtcNow;
 
             await _assetUnitOfWork.AssetRepository.SaveAsync(model);
             await _assetUnitOfWork.FlushAsync();

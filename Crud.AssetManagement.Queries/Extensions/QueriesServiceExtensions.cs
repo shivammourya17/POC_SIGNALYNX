@@ -1,6 +1,6 @@
 using System.Reflection;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Signalynx;
 
 namespace Crud.AssetManagement.Queries.Extensions
 {
@@ -8,7 +8,7 @@ namespace Crud.AssetManagement.Queries.Extensions
     {
         public static IServiceCollection AddQueriesServices(this IServiceCollection services)
         {
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddSignalynx(options => options.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             return services;
         }

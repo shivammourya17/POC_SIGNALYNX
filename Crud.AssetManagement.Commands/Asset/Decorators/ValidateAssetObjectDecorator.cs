@@ -1,24 +1,24 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using MediatR;
+using Signalynx;
 using Crud.AssetManagement.Commands.Utils;
 using Crud.AssetManagement.DTOs.Asset.Enum;
 
 namespace Crud.AssetManagement.Commands.Asset.Decorators
 {
-    // Pipeline behavior that runs before AddAssetCommandHandler.
-    // Registered as a closed generic in CommandsServiceExtensions since the
-    // constraint ties it to AddAssetCommand specifically (same shape as the
+    // Pipeline behavior that runs before AddAssetCommandHandler and UpdateAssetCommandHandler.
+    // Registered once per closed command type in CommandsServiceExtensions since the
+    // constraint ties it to the asset commands (same shape as the
     // org's ValidateAssetObjectDecorator).
     public class ValidateAssetObjectDecorator<TRequest> : IPipelineBehavior<TRequest, Result<string>>
-        where TRequest : AddAssetCommand
+        where TRequest : BaseAssetCommand
     {
         public ValidateAssetObjectDecorator()
         {
         }
 
-        public async Task<Result<string>> Handle(TRequest request, RequestHandlerDelegate<Result<string>> next, CancellationToken cancellationToken)
+        public async ValueTask<Result<string>> HandleAsync(TRequest request, RequestHandlerDelegate<Result<string>> next, CancellationToken cancellationToken = default)
         {
             if (request.AssetTypeId == (int)AssetType.Other && request.AssetMeter != null)
             {

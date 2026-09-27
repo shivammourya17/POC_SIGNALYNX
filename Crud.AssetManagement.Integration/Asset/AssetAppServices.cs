@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using MediatR;
+using Signalynx;
 using Crud.AssetManagement.Integration.Contracts.Asset;
 using Crud.AssetManagement.Queries.Asset.GetAssetById;
 
@@ -7,16 +7,16 @@ namespace Crud.AssetManagement.Integration.Asset
 {
     public class AssetAppServices : IAssetAppServices
     {
-        private readonly IMediator _mediator;
+        private readonly ISignalynx _signalynx;
 
-        public AssetAppServices(IMediator mediator)
+        public AssetAppServices(ISignalynx signalynx)
         {
-            _mediator = mediator;
+            _signalynx = signalynx;
         }
 
         public async Task<GetAssetByIdQueryResult> GetAssetByIdAsync(int assetId)
         {
-            return await _mediator.Send(new GetAssetByIdQuery(assetId));
+            return await _signalynx.QueryAsync<GetAssetByIdQuery, GetAssetByIdQueryResult>(new GetAssetByIdQuery(assetId));
         }
     }
 }

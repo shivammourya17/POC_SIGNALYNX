@@ -1,12 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using Signalynx;
 using Crud.AssetManagement.Infrastructure.Contracts;
 using Crud.AssetManagement.Queries.Shared;
 
 namespace Crud.AssetManagement.Queries.Asset.GetAssetById
 {
-    public class GetAssetByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetAssetByIdQuery, GetAssetByIdQueryResult>
+    public class GetAssetByIdQueryHandler : BaseQueryHandler, IQueryHandler<GetAssetByIdQuery, GetAssetByIdQueryResult>
     {
         private readonly IDbConnectionFactory _connectionFactory;
 
@@ -15,7 +15,7 @@ namespace Crud.AssetManagement.Queries.Asset.GetAssetById
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<GetAssetByIdQueryResult> Handle(GetAssetByIdQuery request, CancellationToken cancellationToken)
+        public async ValueTask<GetAssetByIdQueryResult> HandleAsync(GetAssetByIdQuery request, CancellationToken cancellationToken = default)
         {
             var sql = @"SELECT
                             A.AssetId,
