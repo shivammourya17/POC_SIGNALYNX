@@ -1,23 +1,20 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
-using Crud.AssetManagement.Infrastructure.Contracts;
+using NHibernate;
+using NHibernate.Transform;
 
 namespace Crud.AssetManagement.Queries.Shared
 {
-    // Lightweight raw-SQL query builder over Dapper, playing the same role as
-    // the org's NHibernate-backed QueryBuilder (SetParameter / AppendLineIf /
-    // SetConditionalParameter), but executed via ADO.NET against
-    // IDbConnectionFactory instead of an NHibernate session.
+    // Lightweight raw-SQL query builder over the request's NHibernate ISession
+    // (SetParameter / AppendLineIf / SetConditionalParameter), matching the org's
+    // NHibernate-backed QueryBuilder. Rows are mapped onto T by column alias.
     //
-    // Note: parameters use Dapper's "@Name" convention rather than the ":Name"
-    // convention used by the NHibernate QueryBuilder in the reference example.
+    // Note: parameters use NHibernate's ":Name" convention.
     public class QueryBuilder
     {
         private readonly StringBuilder _sql;
-        private readonly DynamicParameters _parameters = new DynamicParameters();
+        private readonly Dictionary<string, object> _parameters = new Dictionary<string, object>();
 
         public QueryBuilder(string sql)
         {
@@ -25,7 +22,7 @@ namespace Crud.AssetManagement.Queries.Shared
         }
 
         public string Sql => _sql.ToString();
-        public DynamicParameters Parameters => _parameters;
+        public IReadOnlyDictionary<string, object> Parameters => _parameters;
 
         public QueryBuilder AppendLine(string sql)
         {
@@ -45,12 +42,14 @@ namespace Crud.AssetManagement.Queries.Shared
 
         public QueryBuilder SetParameter(string name, object value)
         {
-            _parameters.Add(name, value);
+            _parameters[name] = value;
             return this;
         }
 
         // Only binds the parameter when a value is present, mirroring the
         // reference SetConditionalParameter behavior for optional filters.
+        // NHibernate rejects parameters that are not in the SQL, so the matching
+        // AppendLineIf condition must agree with this one.
         public QueryBuilder SetConditionalParameter(string name, object value)
         {
             var hasValue = value switch
@@ -63,28 +62,32 @@ namespace Crud.AssetManagement.Queries.Shared
 
             if (hasValue)
             {
-                _parameters.Add(name, value);
+                _parameters[name] = value;
             }
 
             return this;
         }
 
-        public async Task<IEnumerable<T>> ExecuteAsync<T>(IDbConnectionFactory connectionFactory)
+        public async Task<IList<T>> ExecuteListAsync<T>(ISession session)
         {
-            using var connection = connectionFactory.CreateConnection();
-            return await connection.QueryAsync<T>(Sql, Parameters);
+            return await CreateQuery<T>(session).ListAsync<T>();
         }
 
-        public async Task<IList<T>> ExecuteListAsync<T>(IDbConnectionFactory connectionFactory)
+        public async Task<T> ExecuteSingleAsync<T>(ISession session)
         {
-            var result = await ExecuteAsync<T>(connectionFactory);
-            return result.ToList();
+            return await CreateQuery<T>(session).UniqueResultAsync<T>();
         }
 
-        public async Task<T> ExecuteSingleAsync<T>(IDbConnectionFactory connectionFactory)
+        private IQuery CreateQuery<T>(ISession session)
         {
-            using var connection = connectionFactory.CreateConnection();
-            return await connection.QueryFirstOrDefaultAsync<T>(Sql, Parameters);
+            var query = session.CreateSQLQuery(Sql);
+
+            foreach (var parameter in _parameters)
+            {
+                query.SetParameter(parameter.Key, parameter.Value);
+            }
+
+            return query.SetResultTransformer(Transformers.AliasToBean<T>());
         }
     }
 }

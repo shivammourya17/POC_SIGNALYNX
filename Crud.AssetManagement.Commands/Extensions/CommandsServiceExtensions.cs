@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Signalynx;
 using Crud.AssetManagement.Commands.Asset;
 using Crud.AssetManagement.Commands.Asset.Decorators;
+using Crud.AssetManagement.Commands.Note.Decorators;
 
 namespace Crud.AssetManagement.Commands.Extensions
 {
@@ -17,6 +18,10 @@ namespace Crud.AssetManagement.Commands.Extensions
                 // Registered per closed command type because the decorator is constrained to BaseAssetCommand.
                 options.AddBehavior<ValidateAssetObjectDecorator<AddAssetCommand>>();
                 options.AddBehavior<ValidateAssetObjectDecorator<UpdateAssetCommand>>();
+
+                // Behaviors run in registration order: Pre wraps Post, Post wraps the handler.
+                options.AddBehavior<PreNoteDecorator>();
+                options.AddBehavior<PostNoteDecorator>();
             });
 
             return services;
